@@ -3,8 +3,8 @@
 # Disconnected Network Windows Patch Management Export Import
 Two script for file export and file import of patches from Windows Update for WSUS servers.__
 
-Export.ps1 - WSUS server connected to Windows Updates__
-Import.ps1 - WSUS server located in your disconnected environment.__
+Export.ps1 - WSUS server connected to Windows Updates<br />
+Import.ps1 - WSUS server located in your disconnected environment.<br />
 
 # WSUS configuration requirments
 
