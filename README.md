@@ -18,7 +18,7 @@ IIS Application Pools:<br />
   ⦁	Increase the WsusPool Private Memory limit set to 0 (unlimited)<br />
   
 Modify httpRunTime by adding an executionTimeout attribute:<br />
-  ⦁	<httpRuntime maxRequestLength="4096" executionTimeout="3600" /><br />
+  ⦁	httpRuntime maxRequestLength="4096" executionTimeout="3600"<br />
   ⦁	In AppPool of WSUSPool change Regular Time Interval (Minutes) to 0<br />
 
 
