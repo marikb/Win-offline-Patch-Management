@@ -8,27 +8,27 @@ Import.ps1 - WSUS server located in your disconnected environment.<br />
 
 # WSUS configuration requirments
 
-### Validate both WSUS servers have same:<br />
+Validate both WSUS servers have same:<br />
 I. Products and Classifications<br />
 II. Update files and languages<br />
 III. Set Express<br />
 
 
-### IIS Application Pools (Disconnected WSUS):<br />
+IIS Application Pools (Disconnected WSUS):<br />
   ⦁	Increase the WsusPool Queue Length to 25000<br />
   ⦁	Increase the WsusPool Private Memory limit set to 0 (unlimited)<br />
   ⦁	In AppPool of WSUSPool change Regular Time Interval (Minutes) to 0<br />
   
-### Modify httpRunTime by adding an executionTimeout attribute:<br />
+Modify httpRunTime by adding an executionTimeout attribute:<br />
   \<httpRuntime maxRequestLength="4096" executionTimeout="3600"\>
 <br />
 
-### Configure to SUP - additional permissions to allow the WSUS Configuration Manager<br />
+Configure to SUP - additional permissions to allow the WSUS Configuration Manager<br />
   ⦁	Add the SYSTEM account to the WSUS Administrators group<br />
   ⦁	Add the NT AUTHORITY\SYSTEM account as a user for the WSUS database (SUSDB). Configure a minimum of the webService database role membership.<br />
 
 
-### SSL Configuration<br />
+SSL Configuration<br />
   ⦁	Create a certificate for the hostname (Optional to SQL too)<br />
   ⦁	Import into server via wusa ctl.<br />
   ⦁	Open port 8531 to all clients<br />
