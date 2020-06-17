@@ -8,7 +8,7 @@ Import.ps1 - WSUS server located in your disconnected environment.<br />
 
 # WSUS configuration requirments
 
-###Validate both WSUS servers have same:<br />
+### Validate both WSUS servers have same:<br />
 I. Products and Classifications<br />
 II. Update files and languages<br />
 III. Set Express<br />
