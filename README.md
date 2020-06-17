@@ -16,12 +16,11 @@ Validate both WSUS servers have same:<br />
 IIS Application Pools:<br />
   ⦁	Increase the WsusPool Queue Length to 25000<br />
   ⦁	Increase the WsusPool Private Memory limit set to 0 (unlimited)<br />
+  ⦁	In AppPool of WSUSPool change Regular Time Interval (Minutes) to 0<br />
   
 Modify httpRunTime by adding an executionTimeout attribute:<br />
-  ⦁	httpRuntime maxRequestLength="4096" executionTimeout="3600"<br />
-  ⦁	In AppPool of WSUSPool change Regular Time Interval (Minutes) to 0<br />
-
-
+  <httpRuntime maxRequestLength="4096" executionTimeout="3600">
+<br />
 Configure to SUP - additional permissions to allow the WSUS Configuration Manager<br />
   ⦁	Add the SYSTEM account to the WSUS Administrators group<br />
   ⦁	Add the NT AUTHORITY\SYSTEM account as a user for the WSUS database (SUSDB). Configure a minimum of the webService database role membership.<br />
