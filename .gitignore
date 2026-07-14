@@ -1,0 +1,13 @@
+# Generated transfer state and package artifacts
+.wsus-offline-export-state.json
+.wsus-offline-export.lock
+*.7z
+*.7z.[0-9]*
+*.xml.gz
+
+# Local logs and editor files
+*.log
+.vs/
+.vscode/
+Thumbs.db
+Desktop.ini
