@@ -22,6 +22,7 @@ Notable changes to this project are recorded here.
 - Fail-fast native command handling and import logs.
 - Operations, package-format, security, and migration documentation.
 - Dependency-free repository checks and Windows CI validation.
+- MIT license.
 
 ### Removed
 

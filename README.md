@@ -116,3 +116,7 @@ The target group must already exist. Approval snapshots contain update IDs, not 
 6. Accept packages only from a trusted connected WSUS server.
 
 Microsoft's supported disconnected workflow is described in [Synchronize software updates with no Internet connection](https://learn.microsoft.com/intune/configmgr/sum/get-started/synchronize-software-updates-disconnected) and [Setting up update synchronizations](https://learn.microsoft.com/windows-server/administration/windows-server-update-services/manage/setting-up-update-synchronizations).
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
