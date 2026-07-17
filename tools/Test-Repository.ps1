@@ -52,6 +52,13 @@ foreach ($file in $runtimeFiles) {
     }
 }
 
+foreach ($file in $runtimeFiles) {
+    if ((Get-Content -LiteralPath $file.FullName -Raw) -notmatch '(?m)^#Requires\s+-Version\s+5\.1\b') {
+        $relativePath = $file.FullName.Substring($repositoryRoot.Length + 1)
+        $failures.Add("$relativePath`: missing '#Requires -Version 5.1' declaration")
+    }
+}
+
 $requiredFiles = @(
     'README.md',
     'SECURITY.md',
@@ -82,6 +89,32 @@ foreach ($markdownFile in $markdownFiles) {
         if (-not (Test-Path -LiteralPath $resolvedTarget)) {
             $relativeMarkdownPath = $markdownFile.FullName.Substring($repositoryRoot.Length + 1)
             $failures.Add("$relativeMarkdownPath`: local link does not resolve: '$target'")
+        }
+    }
+}
+
+$approvedVerbs = [System.Collections.Generic.HashSet[string]]::new(
+    [string[]] @(Get-Verb | ForEach-Object { $_.Verb }),
+    [System.StringComparer]::OrdinalIgnoreCase
+)
+foreach ($file in $powerShellFiles) {
+    $fileAst = [System.Management.Automation.Language.Parser]::ParseFile(
+        $file.FullName,
+        [ref] $null,
+        [ref] $null
+    )
+    $functionAsts = $fileAst.FindAll(
+        { param($node) $node -is [System.Management.Automation.Language.FunctionDefinitionAst] },
+        $true
+    )
+    foreach ($functionAst in $functionAsts) {
+        if ($functionAst.Name -notmatch '-') {
+            continue
+        }
+        $verb = ($functionAst.Name -split '-', 2)[0]
+        if (-not $approvedVerbs.Contains($verb)) {
+            $relativePath = $file.FullName.Substring($repositoryRoot.Length + 1)
+            $failures.Add("$relativePath`: function '$($functionAst.Name)' uses unapproved verb '$verb'")
         }
     }
 }

@@ -23,6 +23,9 @@ Notable changes to this project are recorded here.
 - Operations, package-format, security, and migration documentation.
 - Dependency-free repository checks and Windows CI validation.
 - MIT license.
+- Repository validation now enforces approved PowerShell verbs and a `#Requires -Version 5.1` declaration in every runtime script.
+- `#Requires -Version 5.1` declaration in the shared module.
+- Dependabot configuration to keep GitHub Actions versions current.
 
 ### Removed
 
