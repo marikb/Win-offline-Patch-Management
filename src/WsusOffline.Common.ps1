@@ -10,6 +10,19 @@ function Get-FullPath {
         [string] $Path
     )
 
+    # Resolve a relative path against the current PowerShell file-system
+    # location rather than the process working directory. .NET's GetFullPath
+    # uses [Environment]::CurrentDirectory, which PowerShell does not keep in
+    # sync with Set-Location, so a relative -ExportRoot/-PackagePath/-ContentPath
+    # would otherwise silently resolve against the wrong directory. Rooted
+    # (absolute) paths are left untouched.
+    if (-not [System.IO.Path]::IsPathRooted($Path)) {
+        $Path = [System.IO.Path]::Combine(
+            $ExecutionContext.SessionState.Path.CurrentFileSystemLocation.ProviderPath,
+            $Path
+        )
+    }
+
     $fullPath = [System.IO.Path]::GetFullPath($Path)
     $rootPath = [System.IO.Path]::GetPathRoot($fullPath)
     if ($fullPath.Equals($rootPath, [System.StringComparison]::OrdinalIgnoreCase)) {

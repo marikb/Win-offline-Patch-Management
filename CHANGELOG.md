@@ -32,6 +32,7 @@ Notable changes to this project are recorded here.
 - Export no longer reuses a package sequence number when the incremental state file is stale, lagging, or restored from backup; the next sequence is reconciled against the completed packages in the export root on every run.
 - Export sequence recovery now ignores provisional `.partial-*` directories and nested copies, preventing a phantom import sequence gap.
 - Repository validation reports every failure in a run instead of stopping at the first.
+- Relative path arguments resolve against the current PowerShell location instead of the process working directory, so a relative `-ExportRoot`, `-PackagePath`, `-ContentPath`, or `-StatePath` no longer resolves to the wrong directory after `Set-Location`.
 
 ### Removed
 
