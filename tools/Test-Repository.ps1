@@ -40,9 +40,9 @@ foreach ($file in $powerShellFiles) {
 }
 
 $runtimeFiles = @(
-    Get-ChildItem -LiteralPath (Join-Path $repositoryRoot 'Export') -File -Filter *.ps1
-    Get-ChildItem -LiteralPath (Join-Path $repositoryRoot 'Import') -File -Filter *.ps1
-    Get-ChildItem -LiteralPath (Join-Path $repositoryRoot 'src') -File -Filter *.ps1
+    Get-ChildItem -LiteralPath (Join-Path $repositoryRoot 'Export') -File -Filter *.ps1 -Recurse
+    Get-ChildItem -LiteralPath (Join-Path $repositoryRoot 'Import') -File -Filter *.ps1 -Recurse
+    Get-ChildItem -LiteralPath (Join-Path $repositoryRoot 'src') -File -Filter *.ps1 -Recurse
 )
 $legacyPathPattern = '(?i)\b[def]:\\(?:ExportContent|ImportContent|WsusContent)'
 foreach ($file in $runtimeFiles) {
@@ -225,7 +225,7 @@ finally {
 }
 
 if ($failures.Count -gt 0) {
-    $failures | ForEach-Object { Write-Error $_ }
+    $failures | ForEach-Object { Write-Error $_ -ErrorAction Continue }
     throw "Repository validation failed with $($failures.Count) error(s)."
 }
 

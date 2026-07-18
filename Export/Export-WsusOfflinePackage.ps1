@@ -93,15 +93,29 @@ try {
             $previousFileLengths[[string] $file.RelativePath] = [long] $file.Length
         }
     }
-    else {
-        foreach ($manifestFile in @(Get-ChildItem -LiteralPath $exportRootPath -Filter manifest.json -File -Recurse)) {
-            try {
-                $existingManifest = Read-JsonFile -Path $manifestFile.FullName
-                $lastSequence = [Math]::Max($lastSequence, [int] $existingManifest.Sequence)
-            }
-            catch {
-                Write-Warning "Ignoring unreadable manifest '$($manifestFile.FullName)' while determining the next sequence."
-            }
+
+    # Reconcile the next sequence against the completed packages already present
+    # in the export root, regardless of the state file. This keeps a stale,
+    # restored, or lagging state file - for example, if a crash prevented the
+    # state write after a package was renamed into place - from reusing a
+    # sequence number. Only immediate, non-hidden package directories are
+    # authoritative; provisional '.partial-*' directories and nested copies are
+    # ignored so they cannot introduce a phantom sequence gap on import.
+    foreach ($packageDirectory in @(
+        Get-ChildItem -LiteralPath $exportRootPath -Directory |
+            Where-Object { -not $_.Name.StartsWith('.') }
+    )) {
+        $candidateManifestPath = Join-Path $packageDirectory.FullName 'manifest.json'
+        if (-not (Test-Path -LiteralPath $candidateManifestPath -PathType Leaf)) {
+            continue
+        }
+
+        try {
+            $existingManifest = Read-JsonFile -Path $candidateManifestPath
+            $lastSequence = [Math]::Max($lastSequence, [int] $existingManifest.Sequence)
+        }
+        catch {
+            Write-Warning "Ignoring unreadable manifest '$candidateManifestPath' while determining the next sequence."
         }
     }
 
