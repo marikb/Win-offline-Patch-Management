@@ -25,7 +25,6 @@ Notable changes to this project are recorded here.
 - MIT license.
 - Repository validation now enforces approved PowerShell verbs and a `#Requires -Version 5.1` declaration in every runtime script.
 - `#Requires -Version 5.1` declaration in the shared module.
-- Dependabot configuration to keep GitHub Actions versions current.
 
 ### Fixed
 
